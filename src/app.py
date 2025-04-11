@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, session
 from flask_cors import CORS
 import os
 import requests
 import sqlite3
 from dotenv import load_dotenv
+from routes import bp
 
 # Load environment variables
 load_dotenv()
@@ -11,19 +12,65 @@ load_dotenv()
 app = Flask(__name__, static_folder='../static', template_folder='../templates')
 CORS(app)
 
+# Configuração da sessão
+app.secret_key = os.getenv('SECRET_KEY', 'sua-chave-secreta-aqui')
+
+# Registrar blueprint
+app.register_blueprint(bp)
+
 # Database initialization
 def init_db():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
+    
+    # Tabela de usuários
     c.execute('''
-        CREATE TABLE IF NOT EXISTS conversations (
+        CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id TEXT,
-            message TEXT,
-            response TEXT,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            name TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    
+    # Tabela de resumos
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS resumos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            titulo TEXT NOT NULL,
+            texto TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    ''')
+    
+    # Tabela de questões
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS questoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            pergunta TEXT NOT NULL,
+            resposta TEXT NOT NULL,
+            tipo TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    ''')
+    
+    # Tabela de histórico
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS historico (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            acao TEXT NOT NULL,
+            detalhes TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    ''')
+    
     conn.commit()
     conn.close()
 

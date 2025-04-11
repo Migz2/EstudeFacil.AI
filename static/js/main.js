@@ -1,39 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Elementos da interface
     const chatInput = document.querySelector('input[type="text"]');
     const chatArea = document.querySelector('.flex-1.space-y-4');
+    const navLinks = document.querySelectorAll('nav a');
+    const logoutBtn = document.querySelector('a[href="#logout"]');
     
-    // Handle chat input
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && chatInput.value.trim()) {
-            sendMessage(chatInput.value.trim());
-            chatInput.value = '';
-        }
-    });
-
-    // Handle button clicks
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const buttonText = button.textContent.trim();
-            if (buttonText === '🔍') {
-                if (chatInput.value.trim()) {
-                    sendMessage(chatInput.value.trim());
-                    chatInput.value = '';
-                }
+    // Navegação
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            if (href === '#logout') {
+                fetch('/logout', { method: 'POST' })
+                    .then(() => window.location.href = '/login');
+            } else {
+                window.location.href = href;
             }
-            // Add handlers for other buttons (mic, upload) here
         });
     });
-
-    function sendMessage(message) {
-        // Add user message
-        addMessageToChat('user', message);
-        
-        // Simulate AI response (this will be replaced with actual backend call)
-        setTimeout(() => {
-            addMessageToChat('ai', 'Esta é uma resposta simulada. Integração com o backend pendente.');
-        }, 1000);
+    
+    // Chat functionality
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && chatInput.value.trim()) {
+                sendMessage(chatInput.value.trim());
+                chatInput.value = '';
+            }
+        });
     }
-
+    
+    // API Functions
+    async function sendMessage(message) {
+        try {
+            // Add user message to chat
+            addMessageToChat('user', message);
+            
+            // Send to backend
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message })
+            });
+            
+            const data = await response.json();
+            if (data.status === 'success') {
+                addMessageToChat('ai', data.response);
+            } else {
+                addMessageToChat('ai', 'Desculpe, ocorreu um erro ao processar sua mensagem.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            addMessageToChat('ai', 'Desculpe, ocorreu um erro ao processar sua mensagem.');
+        }
+    }
+    
     function addMessageToChat(type, message) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'flex items-start space-x-4';
@@ -58,5 +80,64 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Scroll to bottom
         chatArea.scrollTop = chatArea.scrollHeight;
+    }
+    
+    // Resumos functionality
+    const resumoForm = document.querySelector('#resumo-form');
+    if (resumoForm) {
+        resumoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const titulo = document.querySelector('#titulo').value;
+            const texto = document.querySelector('#texto').value;
+            
+            try {
+                const response = await fetch('/api/resumos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ titulo, texto })
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('Resumo criado com sucesso!');
+                    resumoForm.reset();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erro ao criar resumo.');
+            }
+        });
+    }
+    
+    // Questões functionality
+    const questaoForm = document.querySelector('#questao-form');
+    if (questaoForm) {
+        questaoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const pergunta = document.querySelector('#pergunta').value;
+            const resposta = document.querySelector('#resposta').value;
+            const tipo = document.querySelector('#tipo').value;
+            
+            try {
+                const response = await fetch('/api/questoes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ pergunta, resposta, tipo })
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('Questão criada com sucesso!');
+                    questaoForm.reset();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erro ao criar questão.');
+            }
+        });
     }
 }); 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico - EstudeFacil.AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#0f1117] text-white">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-[#16181d] p-6">
+            <div class="text-xl font-bold mb-8">EstudeFacil.AI</div>
+            <nav class="space-y-4">
+                <a href="/" class="flex items-center space-x-3 text-gray-400 hover:text-white">
+                    <span class="w-5 h-5">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/resumos" class="flex items-center space-x-3 text-gray-400 hover:text-white">
+                    <span class="w-5 h-5">📝</span>
+                    <span>Resumos</span>
+                </a>
+                <a href="/questoes" class="flex items-center space-x-3 text-gray-400 hover:text-white">
+                    <span class="w-5 h-5">❓</span>
+                    <span>Questões</span>
+                </a>
+                <a href="/historico" class="flex items-center space-x-3 text-purple-400">
+                    <span class="w-5 h-5">📜</span>
+                    <span>Histórico</span>
+                </a>
+                <a href="#logout" class="flex items-center space-x-3 text-gray-400 hover:text-white mt-auto">
+                    <span class="w-5 h-5">🚪</span>
+                    <span>Sair</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <!-- Top Bar -->
+            <header class="bg-[#16181d] p-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Histórico</h1>
+                <div class="flex items-center space-x-3">
+                    <span>{{ session.user_name }}</span>
+                    <img src="/static/images/default-avatar.png" alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 p-6 overflow-y-auto">
+                <!-- Filters -->
+                <div class="mb-8">
+                    <div class="flex space-x-4">
+                        <select class="px-3 py-2 bg-[#1e2028] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="all">Todas as Ações</option>
+                            <option value="resumo">Resumos</option>
+                            <option value="questao">Questões</option>
+                            <option value="chat">Chat</option>
+                        </select>
+                        
+                        <select class="px-3 py-2 bg-[#1e2028] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="recent">Mais Recentes</option>
+                            <option value="oldest">Mais Antigas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- History List -->
+                <div class="space-y-4">
+                    <!-- History Item -->
+                    <div class="bg-[#16181d] p-4 rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold">Criação de Resumo</h3>
+                                <p class="text-sm text-gray-400">Título do Resumo</p>
+                            </div>
+                            <span class="text-sm text-gray-400">há 2 horas</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">Resumo criado com sucesso</p>
+                    </div>
+
+                    <!-- History Item -->
+                    <div class="bg-[#16181d] p-4 rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold">Questão Respondida</h3>
+                                <p class="text-sm text-gray-400">Questão #123</p>
+                            </div>
+                            <span class="text-sm text-gray-400">há 1 dia</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">Resposta correta: 80%</p>
+                    </div>
+
+                    <!-- History Item -->
+                    <div class="bg-[#16181d] p-4 rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold">Chat com IA</h3>
+                                <p class="text-sm text-gray-400">Sessão de Estudo</p>
+                            </div>
+                            <span class="text-sm text-gray-400">há 2 dias</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">Conversa sobre tópico X</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/js/main.js"></script>
+</body>
+</html> 

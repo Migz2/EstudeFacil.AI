@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - EstudeFacil.AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0f1117] text-white min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md p-8 space-y-8 bg-[#16181d] rounded-lg shadow-lg">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold">EstudeFacil.AI</h1>
+            <p class="mt-2 text-gray-400">Crie sua conta</p>
+        </div>
+        
+        {% if error %}
+        <div class="bg-red-500 text-white p-3 rounded-lg">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <form method="POST" class="mt-8 space-y-6">
+            <div class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium">Nome</label>
+                    <input type="text" id="name" name="name" required
+                           class="mt-1 block w-full px-3 py-2 bg-[#1e2028] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium">Email</label>
+                    <input type="email" id="email" name="email" required
+                           class="mt-1 block w-full px-3 py-2 bg-[#1e2028] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium">Senha</label>
+                    <input type="password" id="password" name="password" required
+                           class="mt-1 block w-full px-3 py-2 bg-[#1e2028] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+            </div>
+            
+            <div>
+                <button type="submit"
+                        class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium">
+                    Registrar
+                </button>
+            </div>
+        </form>
+        
+        <div class="text-center">
+            <p class="text-sm text-gray-400">
+                Já tem uma conta?
+                <a href="{{ url_for('main.login') }}" class="text-purple-400 hover:text-purple-300">
+                    Faça login
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstudeFacil.AI - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#0f1117] text-white">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-[#16181d] p-6">
+            <div class="text-xl font-bold mb-8">EstudeFacil.AI</div>
+            <nav class="space-y-4">
+                <a href="#" class="flex items-center space-x-3 text-purple-400">
+                    <span class="w-5 h-5">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 text-gray-400 hover:text-white">
+                    <span class="w-5 h-5">📜</span>
+                    <span>History</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 text-gray-400 hover:text-white">
+                    <span class="w-5 h-5">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 text-gray-400 hover:text-white mt-auto">
+                    <span class="w-5 h-5">🚪</span>
+                    <span>Log Out</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <!-- Top Bar -->
+            <header class="bg-[#16181d] p-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Dashboard</h1>
+                <div class="flex items-center space-x-3">
+                    <span>Yehor</span>
+                    <img src="/static/images/default-avatar.png" alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 p-6 overflow-y-auto">
+                <!-- Navigation Tabs -->
+                <div class="flex space-x-4 mb-6">
+                    <button class="px-4 py-2 bg-[#16181d] rounded-lg">Conversa</button>
+                    <button class="px-4 py-2 bg-[#16181d] rounded-lg">Flashcards</button>
+                    <button class="px-4 py-2 bg-[#16181d] rounded-lg">Testes</button>
+                    <button class="px-4 py-2 bg-[#16181d] rounded-lg">Resumo</button>
+                    <button class="px-4 py-2 bg-[#16181d] rounded-lg">Capítulos</button>
+                    <button class="px-4 py-2 bg-[#16181d] rounded-lg">Notas</button>
+                </div>
+
+                <!-- Chat Area -->
+                <div class="flex-1 flex flex-col">
+                    <div class="flex-1 space-y-4">
+                        <!-- AI Message -->
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                            <div class="flex-1">
+                                <p class="text-lg">Olá! Como posso ajudar você hoje?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="mt-auto bg-[#16181d] p-4 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <input type="text" placeholder="Pergunte o que quiser..." 
+                                   class="flex-1 bg-[#1e2028] border border-gray-700 rounded-lg px-4 py-2">
+                            <button class="p-2 bg-[#1e2028] rounded-lg">
+                                <span>🔍</span>
+                            </button>
+                            <button class="p-2 bg-[#1e2028] rounded-lg">
+                                <span>🎤</span>
+                            </button>
+                            <button class="p-2 bg-[#1e2028] rounded-lg">
+                                <span>📤</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/js/main.js"></script>
+</body>
+</html> 

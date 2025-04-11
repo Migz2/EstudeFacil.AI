@@ -1,0 +1,41 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #16181d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2d3139;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3d424d;
+}
+
+/* Gradient animations */
+.ai-avatar {
+    animation: gradient 3s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Custom focus styles */
+input:focus, button:focus {
+    outline: none;
+    ring-2 ring-purple-500;
+} 
